@@ -29,7 +29,7 @@
         <!-- Navbar -->
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark px-3">
             <div class="container-fluid">
-                <a class="navbar-brand" href="home.jsp">Trang chủ</a>
+                <a class="navbar-brand" href="home">Trang chủ</a>
                 <button
                     class="navbar-toggler"
                     type="button"

@@ -127,7 +127,7 @@
             <div class="sidebar pe-4 pb-3">
                 <nav class="navbar bg-light navbar-light">
                     <a href="home" class="navbar-brand mx-4 mb-3">
-                        <h3 class="text-primary">Trang Admin</h3>
+                        <h3 class="text-primary">Trang Chủ</h3>
                     </a>
                     <div class="d-flex align-items-center ms-4 mb-4">
                         <div class="position-relative">

@@ -41,8 +41,7 @@
         <link href="${pageContext.request.contextPath}/assets/css/style.css" rel="stylesheet">
 
         <style>
-            /* Đảm bảo body luôn chiếm hết chiều cao của viewport */
-            html, body {
+             html, body {
                 height: 100%;
                 margin: 0;
             }
@@ -59,65 +58,119 @@
                 flex: 1;
             }
 
-            table {
-                width: 100%;
-                border-collapse: collapse;
-                margin: 20px 0;
-                font-size: 18px;
-                text-align: left;
-            }
-            th, td {
-                padding: 10px;
-                border: 1px solid #ddd;
-            }
-            th {
-                background-color: #f4f4f4;
-            }
-            /* Cải thiện button phân trang */
-            .pagination {
-                list-style-type: none;
-                padding: 0;
-                margin: 20px 0;
-                text-align: center;
-            }
+            .form-container {
+                max-width: 800px;
+                margin: 50px auto;
+                padding: 20px;
+                border: 1px solid #ccc;
+                border-radius: 10px;
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 
-            .pagination li {
-                display: inline;
-                margin-right: 5px;
-            }
+                /* Căn chỉnh footer */
+                .footer {
 
-            .pagination li a {
-                padding: 10px 15px;
-                background-color: #007bff;
-                color: white;
-                text-decoration: none;
-                border-radius: 5px;
-                transition: background-color 0.3s ease;
-            }
+                    color: #333; /* Màu chữ tối */
+                    padding-top: 200px;
+                    padding-bottom: 0;
+                    margin-top: auto; /* Đảm bảo footer luôn nằm ở dưới */
+                    margin-bottom: 0;
+                    text-align: center;
+                }
 
-            .pagination li a:hover {
-                background-color: #0056b3; /* Màu nền khi hover qua các link phân trang */
-            }
+                .product-option {
+                    display: flex;
+                    gap: 10px;
+                    margin-bottom: 20px;
+                }
 
-            .pagination .active a {
-                background-color: #0056b3;
-            }
+                .product-option .option-item {
+                    padding: 10px 20px;
+                    border: 1px solid #ccc;
+                    border-radius: 5px;
+                    cursor: pointer;
+                    transition: background-color 0.3s;
+                }
 
-            .pagination .disabled a {
-                background-color: #ccc;
-                cursor: not-allowed;
-            }
+                .product-option .option-item.selected {
+                    background-color: #28a745;
+                    color: white;
+                    border-color: #28a745;
+                }
 
-            /* Căn chỉnh footer */
-            .footer {
+                .product-option .option-item:hover {
+                    background-color: #f0f0f0;
+                }
 
-                color: #333; /* Màu chữ tối */
-                padding-top: 200px;
-                padding-bottom: auto;
-                margin-top: auto; /* Đảm bảo footer luôn nằm ở dưới */
-                margin-bottom: 0px;
-                text-align: center;
-            }
+                .color-swatch {
+                    display: flex;
+                    gap: 10px;
+                }
+
+                .color-swatch .color-item {
+                    display: inline-block;
+                    width: 50px;
+                    height: 50px;
+                    border-radius: 5px;
+                    cursor: pointer;
+                    border: 2px solid transparent;
+                }
+
+                .color-swatch .color-item.selected {
+                    border-color: #28a745;
+                }
+
+                .price-tag {
+                    font-weight: bold;
+                    color: red;
+                }
+
+                .d-flex {
+                    display: flex;
+                    align-items: center;
+                    flex-wrap: wrap;  /* Cho phép các phần tử xuống dòng nếu không đủ chỗ */
+                }
+
+                .d-flex .form-check {
+                    display: inline-flex;
+                    align-items: center;
+                    margin-right: 15px;  /* Tăng khoảng cách giữa các radio button */
+                    margin-bottom: 10px;  /* Khoảng cách dưới mỗi radio button */
+                    font-family: Arial, sans-serif;  /* Thay đổi font */
+                }
+
+                .d-flex .form-check input {
+                    width: 18px;
+                    height: 18px;
+                    margin-right: 8px;  /* Khoảng cách giữa radio button và label */
+                    border-radius: 50%;  /* Đổi sang dạng tròn cho radio button */
+                    border: 2px solid #007bff;  /* Đặt đường viền cho radio button */
+                    transition: all 0.3s ease;  /* Thêm hiệu ứng chuyển động cho radio button */
+                }
+
+                .d-flex .form-check input:checked {
+                    background-color: #007bff;  /* Màu nền khi radio button được chọn */
+                    border-color: #0056b3;  /* Màu đường viền khi radio button được chọn */
+                }
+
+                .d-flex .form-check label {
+                    font-size: 16px;  /* Tăng kích thước font */
+                    color: #333;  /* Màu chữ */
+                    transition: all 0.3s ease;  /* Thêm hiệu ứng chuyển động cho label */
+                }
+
+                .d-flex .form-check input:hover {
+                    border-color: #0056b3;  /* Màu đường viền khi hover */
+                }
+
+                .d-flex .form-check label:hover {
+                    color: #0056b3;  /* Màu chữ khi hover */
+                }
+
+                /* Thêm hiệu ứng cho phần container */
+                .d-flex {
+                    margin-top: 20px;
+                    margin-bottom: 20px;
+                }
 
         </style>
     </head>
@@ -127,15 +180,15 @@
             <div class="sidebar pe-4 pb-3">
                 <nav class="navbar bg-light navbar-light">
                     <a href="home" class="navbar-brand mx-4 mb-3">
-                        <h3 class="text-primary">Trang Admin</h3>
+                        <h3 class="text-primary">Trang Chủ</h3>
                     </a>
                     <div class="d-flex align-items-center ms-4 mb-4">
                         <div class="position-relative">
-                            <img class="rounded-circle" src="../../assets/img/user.jpg" alt="" style="width: 40px; height: 40px;">
+                            <img class="rounded-circle" src="${pageContext.request.contextPath}/${user.avatar}" alt="" style="width: 40px; height: 40px;">
                             <div class="bg-success rounded-circle border border-2 border-white position-absolute end-0 bottom-0 p-1"></div>
                         </div>
                         <div class="ms-3">
-                            <h6 class="mb-0">Jhon Doe</h6>
+                            <h6 class="mb-0">${user.fullname}</h6>
                             <span>Admin</span>
                         </div>
                     </div>

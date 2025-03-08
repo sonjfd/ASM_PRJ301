@@ -1,3 +1,4 @@
+
 <%-- 
     Document   : admin.jsp
     Created on : Feb 21, 2025, 8:19:14 PM
@@ -128,15 +129,15 @@
         <div class="sidebar pe-4 pb-3">
             <nav class="navbar bg-light navbar-light">
                 <a href="home" class="navbar-brand mx-4 mb-3">
-                    <h3 class="text-primary">Trang Admin</h3>
+                    <h3 class="text-primary">Trang Chủ</h3>
                 </a>
                 <div class="d-flex align-items-center ms-4 mb-4">
                     <div class="position-relative">
-                        <img class="rounded-circle" src="<c:url value="'${user.avatar}'"></c:url>" alt="" style="width: 40px; height: 40px;">
-                            <div class="bg-success rounded-circle border border-2 border-white position-absolute end-0 bottom-0 p-1"></div>
-                        </div>
-                        <div class="ms-3">
-                            <h6 class="mb-0">${user.fullname}</h6>
+                        <img class="rounded-circle" src="${pageContext.request.contextPath}/${user.avatar}" alt="" style="width: 40px; height: 40px;">
+                        <div class="bg-success rounded-circle border border-2 border-white position-absolute end-0 bottom-0 p-1"></div>
+                    </div>
+                    <div class="ms-3">
+                        <h6 class="mb-0">${user.fullname}</h6>
                         <span>Admin</span>
                     </div>
                 </div>
@@ -179,7 +180,7 @@
                 <div class="navbar-nav align-items-center ms-auto">
                     <div class="nav-item dropdown">
                         <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
-                            <img class="rounded-circle me-lg-2" src="<c:url value="'${user.avatar}'"></c:url>" alt="" style="width: 40px; height: 40px;">
+                            <img class="rounded-circle me-lg-2" src="${pageContext.request.contextPath}/${user.avatar}" alt="" style="width: 40px; height: 40px;">
                             <span class="d-none d-lg-inline-flex">${user.fullname}</span>
                         </a>
                         <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
@@ -193,47 +194,47 @@
             </nav>
             <br/>
             <br/>
-           
-           <!-- Button trigger modal -->
-<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addImageModal">
-    Thêm ảnh mới
-</button>
 
-<!-- Modal Form -->
-<div class="modal fade" id="addImageModal" tabindex="-1" aria-labelledby="addImageModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="addImageModalLabel">Thêm Ảnh Sản Phẩm</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            <!-- Button trigger modal -->
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addImageModal">
+                Thêm ảnh mới
+            </button>
+
+            <!-- Modal Form -->
+            <div class="modal fade" id="addImageModal" tabindex="-1" aria-labelledby="addImageModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="addImageModalLabel">Thêm Ảnh Sản Phẩm</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form action="createimg" method="post" enctype="multipart/form-data">
+                                <div class="mb-3">
+                                    <label for="pid" class="form-label">Chọn Sản Phẩm</label>
+                                    <select class="form-select" id="pid" name="pid" required>
+                                        <c:forEach items="${listproduct}" var="p">
+                                            <option value="${p.id}">${p.name}</option>
+                                        </c:forEach>
+                                    </select>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="name" class="form-label">Tên Ảnh</label>
+                                    <input type="text" class="form-control" id="name" name="name" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="path" class="form-label">Chọn Ảnh</label>
+                                    <input type="file" class="form-control" id="path" name="path" required>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                                    <button type="submit" class="btn btn-success">Thêm Ảnh</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="modal-body">
-                <form action="createimg" method="post" enctype="multipart/form-data">
-                    <div class="mb-3">
-                        <label for="pid" class="form-label">Chọn Sản Phẩm</label>
-                        <select class="form-select" id="pid" name="pid" required>
-                            <c:forEach items="${listproduct}" var="p">
-                                <option value="${p.id}">${p.name}</option>
-                            </c:forEach>
-                        </select>
-                    </div>
-                    <div class="mb-3">
-                        <label for="name" class="form-label">Tên Ảnh</label>
-                        <input type="text" class="form-control" id="name" name="name" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="path" class="form-label">Chọn Ảnh</label>
-                        <input type="file" class="form-control" id="path" name="path" required>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
-                        <button type="submit" class="btn btn-success">Thêm Ảnh</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
 
 
             <!-- Navbar End -->
@@ -310,4 +311,3 @@
                 </body>
 
                 </html>
-

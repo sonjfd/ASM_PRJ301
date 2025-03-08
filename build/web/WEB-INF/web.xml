@@ -180,6 +180,10 @@
         <servlet-name>ProductVariantDetails</servlet-name>
         <servlet-class>Conntrol.Common.ProductVariantDetails</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>AccessDenied</servlet-name>
+        <servlet-class>Controller.User.AccessDenied</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>addCategories</servlet-name>
         <url-pattern>/addcategories</url-pattern>
@@ -408,6 +412,10 @@
     <servlet-mapping>
         <servlet-name>ProductVariantDetails</servlet-name>
         <url-pattern>/product-variant-details</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AccessDenied</servlet-name>
+        <url-pattern>/accessdenied</url-pattern>
     </servlet-mapping>
     <welcome-file-list>
         <welcome-file>HomePage.jsp</welcome-file>

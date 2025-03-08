@@ -24,7 +24,7 @@ import model.Users;
  *
  * @author Dell
  */
-@WebFilter(filterName = "FilterRole", urlPatterns = {"/admin"})
+@WebFilter(filterName = "FilterRole", urlPatterns = {"/admin","/user","/listcategories"})
 public class FilterRole implements Filter {
 
     private static final boolean debug = true;
@@ -101,7 +101,7 @@ public class FilterRole implements Filter {
      */
     public void doFilter(ServletRequest request, ServletResponse response,
             FilterChain chain)
-            throws IOException, ServletException {
+            throws IOException, ServletException {  
 
         if (debug) {
             log("FilterRole:doFilter()");
@@ -113,12 +113,15 @@ public class FilterRole implements Filter {
         HttpSession session = req.getSession();
         if (session.getAttribute("user") == null) {
             res.sendRedirect("login");
+            
         } else {
             Users u = (Users) session.getAttribute("user");
             if (u.getRole().equals("admin")) {
                 req.getRequestDispatcher("admin").forward(request, response);
+                return;
             } else {
-                res.sendRedirect("home");
+                res.sendRedirect("accessdenied");
+                return;
             }
         
     }
