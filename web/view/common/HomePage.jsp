@@ -140,43 +140,45 @@
 
 
                                         <c:forEach items="${listvariant}" var="variant">
-                                            <a href="product-variant-details?id=${variant.id}">
-                                                <!-- product -->
-                                                <div class="product">
-                                                    <div class="product-img">
-                                                        <img src="${pageContext.request.contextPath}${variant.product.avatar}" alt="${variant.product.name}" style="width: 253px;height: 172px">
+                                            <c:if test="${variant.product.status==1}">
+                                                <a href="product-variant-details?id=${variant.product.id}&size=${variant.size.memorySize}&color=${variant.color.color}">
 
-                                                        <div class="product-label">
-                                                            <span class="rating1">${variant.product.totalRating}</span>
-                                                           
+                                                    <!-- product -->
+                                                    <div class="product">
+                                                        <div class="product-img">
+                                                            <img src="${pageContext.request.contextPath}${variant.product.avatar}" alt="${variant.product.name}" style="width: 253px;height: 253px">
+
+                                                            <div class="product-label">
+                                                                <span class="rating1">${variant.product.totalRating}</span>
+
+                                                            </div>
+                                                        </div>
+                                                        <div class="product-body">
+                                                            <p class="product-category">${variant.product.category.name }</p>
+                                                            <h5 class="product-name">${variant.product.name}</h5>
+                                                            <h5 class="product-name">${variant.size.memorySize}GB${" "}${variant.color.color}</h5>
+                                                            <h4 class="product-price">
+                                                                <fmt:formatNumber value="${variant.price}" type="currency" currencySymbol="" groupingUsed="true"/> VND 
+                                                                <del class="product-old-price">
+                                                                    <fmt:formatNumber value="${variant.price + (variant.price * variant.sale / 100)}" type="currency" currencySymbol="" groupingUsed="true"/> VND
+                                                                </del>
+                                                            </h4>
+
+                                                            <div class="product-rating">
+                                                                <i class="fa fa-star"></i>
+                                                                <i class="fa fa-star"></i>
+                                                                <i class="fa fa-star"></i>
+                                                                <i class="fa fa-star"></i>
+                                                                <i class="fa fa-star-o"></i>
+                                                            </div>
+
+                                                        </div>  
+                                                        <div class="add-to-cart">
+                                                            <button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>
                                                         </div>
                                                     </div>
-                                                    <div class="product-body">
-                                                        <p class="product-category">${variant.product.category.name }</p>
-                                                        <h5 class="product-name">${variant.product.name}</h5>
-                                                        <h5 class="product-name">${variant.size.memorySize}GB${" "}${variant.color.color}</h5>
-                                                        <h4 class="product-price">
-                                                            <fmt:formatNumber value="${variant.price}" type="currency" currencySymbol="" groupingUsed="true"/> VND 
-                                                            <del class="product-old-price">
-                                                                <fmt:formatNumber value="${variant.price + (variant.price * variant.sale / 100)}" type="currency" currencySymbol="" groupingUsed="true"/> VND
-                                                            </del>
-                                                        </h4>
-
-                                                        <div class="product-rating">
-                                                            <i class="fa fa-star"></i>
-                                                            <i class="fa fa-star"></i>
-                                                            <i class="fa fa-star"></i>
-                                                            <i class="fa fa-star"></i>
-                                                            <i class="fa fa-star-o"></i>
-                                                        </div>
-
-                                                    </div>  
-                                                    <div class="add-to-cart">
-                                                        <button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>
-                                                    </div>
-                                                </div>
-                                            </a>
-
+                                                </a>
+                                            </c:if>
                                             <!-- /product -->
                                         </c:forEach>
 
@@ -227,42 +229,44 @@
 
 
                                         <c:forEach items="${salevariants}" var="variant">
-                                            <a href="product-variant-details?id=${variant.id}">
-                                                <!-- product -->
-                                                <div class="product">
-                                                    <div class="product-img">
-                                                        <img src="${pageContext.request.contextPath}${variant.product.avatar}" alt="${variant.product.name}" style="width: 253px;height: 172px">
-                                                        <div class="product-label">
-                                                            <span class="sale">-${variant.sale}%</span>
-                                                            <span class="new">NEW</span>
+                                            <c:if test="${variant.product.status==1}">
+                                                <a href="product-variant-details?id=${variant.product.id}&size=${variant.size.memorySize}&color=${variant.color.color}">
+
+                                                    <!-- product -->
+                                                    <div class="product">
+                                                        <div class="product-img">
+                                                            <img src="${pageContext.request.contextPath}${variant.product.avatar}" alt="${variant.product.name}" style="width: 253px;height: 253px">
+                                                            <div class="product-label">
+                                                                <span class="sale">-${variant.sale}%</span>
+                                                                <span class="new">NEW</span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="product-body">
+                                                            <p class="product-category">${variant.product.category.name }</p>
+                                                            <h5 class="product-name">${variant.product.name}</h5>
+                                                            <h5 class="product-name">${variant.size.memorySize}GB${" "}</h5>
+                                                            <h4 class="product-price">
+                                                                <fmt:formatNumber value="${variant.price}" type="currency" currencySymbol="" groupingUsed="true"/> VND 
+                                                                <del class="product-old-price">
+                                                                    <fmt:formatNumber value="${variant.price + (variant.price * variant.sale / 100)}" type="currency" currencySymbol="" groupingUsed="true"/> VND
+                                                                </del>
+                                                            </h4>
+
+                                                            <div class="product-rating">
+                                                                <i class="fa fa-star"></i>
+                                                                <i class="fa fa-star"></i>
+                                                                <i class="fa fa-star"></i>
+                                                                <i class="fa fa-star"></i>
+                                                                <i class="fa fa-star-o"></i>
+                                                            </div>
+
+                                                        </div>  
+                                                        <div class="add-to-cart">
+                                                            <button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>
                                                         </div>
                                                     </div>
-                                                    <div class="product-body">
-                                                        <p class="product-category">${variant.product.category.name }</p>
-                                                        <h5 class="product-name">${variant.product.name}</h5>
-                                                        <h5 class="product-name">${variant.size.memorySize}GB${" "}</h5>
-                                                        <h4 class="product-price">
-                                                            <fmt:formatNumber value="${variant.price}" type="currency" currencySymbol="" groupingUsed="true"/> VND 
-                                                            <del class="product-old-price">
-                                                                <fmt:formatNumber value="${variant.price + (variant.price * variant.sale / 100)}" type="currency" currencySymbol="" groupingUsed="true"/> VND
-                                                            </del>
-                                                        </h4>
-
-                                                        <div class="product-rating">
-                                                            <i class="fa fa-star"></i>
-                                                            <i class="fa fa-star"></i>
-                                                            <i class="fa fa-star"></i>
-                                                            <i class="fa fa-star"></i>
-                                                            <i class="fa fa-star-o"></i>
-                                                        </div>
-
-                                                    </div>  
-                                                    <div class="add-to-cart">
-                                                        <button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>
-                                                    </div>
-                                                </div>
-                                            </a>
-
+                                                </a>
+                                            </c:if>
                                             <!-- /product -->
                                         </c:forEach>
                                     </div>
@@ -278,7 +282,7 @@
             </div>
             <!-- /container -->
         </div>
-       
+
 
 
         <!-- FOOTER -->

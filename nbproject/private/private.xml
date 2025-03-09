@@ -11,12 +11,6 @@
         </file>
     </editor-bookmarks>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group>
-            <file>file:/D:/prj301/ASM_PRJ301-main/src/java/Controller/User/profile.java</file>
-            <file>file:/D:/prj301/ASM_PRJ301-main/src/java/Controller/User/updateprofile.java</file>
-            <file>file:/D:/prj301/ASM_PRJ301-main/web/view/admin/listcategories.jsp</file>
-            <file>file:/D:/prj301/ASM_PRJ301-main/web/view/admin/listimg.jsp</file>
-            <file>file:/D:/prj301/ASM_PRJ301-main/web/view/admin/listproduct.jsp</file>
-        </group>
+        <group/>
     </open-files>
 </project-private>

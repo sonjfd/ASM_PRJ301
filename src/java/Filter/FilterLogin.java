@@ -23,7 +23,7 @@ import jakarta.servlet.http.HttpSession;
  *
  * @author Dell
  */
-@WebFilter(filterName = "FilterLogin", urlPatterns = {"/admin" ,"/wishlist" ,"/user","/listcategories"})
+@WebFilter(filterName = "FilterLogin", urlPatterns = {"/admin" ,"/wishlist","/add-wish-List"})
 public class FilterLogin implements Filter {
 
     private static final boolean debug = true;

@@ -2,7 +2,6 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-
 package Conntrol.Common;
 
 import DAO.CategoriesDAO;
@@ -27,34 +26,37 @@ import model.Size;
  * @author Dell
  */
 public class HeaderSearch extends HttpServlet {
-   
-    /** 
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
+
+    /**
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
+     * methods.
+     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
+            throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet HeaderSearch</title>");  
+            out.println("<title>Servlet HeaderSearch</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet HeaderSearch at " + request.getContextPath () + "</h1>");
+            out.println("<h1>Servlet HeaderSearch at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
-    } 
+    }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /** 
+    /**
      * Handles the HTTP <code>GET</code> method.
+     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -62,23 +64,61 @@ public class HeaderSearch extends HttpServlet {
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
-         List<Size> listsize = new SizeDAO().getAll();
+            throws ServletException, IOException {
+        String service = request.getParameter("service");
+        List<Size> listsize = new SizeDAO().getAll();
         request.setAttribute("listsize", listsize);
         List<Color> listcolor = new ColorDAO().getAll();
         request.setAttribute("listColors", listcolor);
-         CategoriesDAO cdao = new CategoriesDAO();
+        CategoriesDAO cdao = new CategoriesDAO();
         List<Categories> listc = cdao.getAllCategories();
         request.setAttribute("listcategori", listc);
         ProductDAO dao = new ProductDAO();
         String name = request.getParameter("name");
         ArrayList<Product> list = null;
+        int cid = Integer.parseInt(request.getParameter("cid"));
+        if ("fillterbycid".equals(service)) {
+            list = dao.getProductsByCategoryId(cid);
+        
+
+        
+            request.setAttribute("listproduct", list);
+            request.getRequestDispatcher("/view/common/HeaderSearch.jsp").forward(request, response);
+        }
+    }
+
+    /**
+     * Handles the HTTP <code>POST</code> method.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        String service = request.getParameter("service");
+        List<Size> listsize = new SizeDAO().getAll();
+        request.setAttribute("listsize", listsize);
+        List<Color> listcolor = new ColorDAO().getAll();
+        request.setAttribute("listColors", listcolor);
+        CategoriesDAO cdao = new CategoriesDAO();
+        List<Categories> listc = cdao.getAllCategories();
+        request.setAttribute("listcategori", listc);
+        ProductDAO dao = new ProductDAO();
+        String name = request.getParameter("name");
+        ArrayList<Product> list = null;
+        
+
         try {
+
             if (name != null && !name.trim().isEmpty()) {
                 list = dao.searchProductByName(name.trim().toLowerCase());
                 if (list == null || list.isEmpty()) {
                     request.setAttribute("message", "Không tìm thấy sản phẩm nào!");
                 }
+
             } else {
                 list = dao.getAllProduct();
             }
@@ -87,23 +127,11 @@ public class HeaderSearch extends HttpServlet {
         } catch (ClassNotFoundException e) {
             System.out.println(e);
         }
-    } 
-
-    /** 
-     * Handles the HTTP <code>POST</code> method.
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
-        processRequest(request, response);
     }
 
-    /** 
+    /**
      * Returns a short description of the servlet.
+     *
      * @return a String containing servlet description
      */
     @Override

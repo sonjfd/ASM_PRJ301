@@ -44,8 +44,8 @@
                 margin: 0;
                 padding: 0;
             }
-            
-            
+
+
 
 
             /* Kiểu dáng avatar */
@@ -215,15 +215,18 @@
                         <!-- SEARCH BAR -->
                         <div class="col-md-6">
                             <div class="header-search">
-                                <form action="headersearch" method="get">
+                                <form action="headersearch" method="post">
                                     <div class="search-container">
                                         <select class="input-select" id="categorySelect">
+                                            <option value="">Lựa chọn</option> 
 
                                             <c:forEach items="${listcategori}" var="c">
-                                                <c:if test="${c.status==1}">
-                                                    <option value="${c.id}">${c.name}</option>
+
+                                                <c:if test="${c.status == 1}">
+                                                    <option value="${c.id}" ${param.cid == c.id ? 'selected' : ''}>${c.name}</option>
                                                 </c:if>
                                             </c:forEach>
+
 
                                         </select>
                                         <input class="input" name="name"  placeholder="Tìm kiếm....">
@@ -237,7 +240,7 @@
                             document.getElementById("categorySelect").addEventListener("change", function () {
                                 var cid = this.value;
                                 if (cid) {
-                                    window.location.href = "shopdetails?service=fillterbycid&cid=" + cid;
+                                    window.location.href = "headersearch?service=fillterbycid&cid=" + cid;
                                 }
                             });
                         </script>

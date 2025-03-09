@@ -82,14 +82,16 @@ public class ProductVariantDAO {
         }
         return null;
     }
-
-    public ArrayList<ProductVariant> getProductVariantByProductId(int pid) throws ClassNotFoundException {
-        String sql = "SELECT * FROM product_variants WHERE product_id=?";
-        ArrayList<ProductVariant> list = new ArrayList<>();
+    
+    
+     public ProductVariant getVariantBySizeAndColor(int id,int size1,int color1) {
+        String sql = "SELECT * FROM product_variants WHERE id = ? or size_id=? or color_id=? ";
         try (Connection conn = DBContext.getConnection(); PreparedStatement stmt = conn.prepareStatement(sql)) {
-            stmt.setInt(1, pid);
+            stmt.setInt(1, id);
+            stmt.setInt(2, size1);
+            stmt.setInt(3, color1);
             ResultSet rs = stmt.executeQuery();
-            while (rs.next()) {
+            if (rs.next()) {
                 // Lấy đối tượng Product từ ProductDAO
                 Product product = new ProductDAO().getProductById(rs.getInt("product_id"));
 
@@ -98,11 +100,43 @@ public class ProductVariantDAO {
 
                 // Lấy đối tượng Size từ SizeDAO
                 Size size = new SizeDAO().getSizeById(rs.getInt("size_id"));
-                ProductVariant variant = new ProductVariant(
+
+                return new ProductVariant(
                         rs.getInt("id"),
                         product, // Gán đối tượng Product
                         size, // Gán đối tượng Color
                         color, // Gán đối tượng Size
+                        rs.getInt("price"),
+                        rs.getInt("sale"),
+                        rs.getInt("stock"),
+                        rs.getInt(8),
+                        rs.getTimestamp(9),
+                        rs.getTimestamp(10)
+                );
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(ProductVariantDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+
+    public ArrayList<ProductVariant> getProductVariantByProductId(int pid)  {
+        String sql = "SELECT * FROM product_variants WHERE product_id=?";
+        ArrayList<ProductVariant> list = new ArrayList<>();
+        try (Connection conn = DBContext.getConnection(); PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, pid);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                Product product = new ProductDAO().getProductById(rs.getInt("product_id"));
+                Color color = new ColorDAO().getColorByid(rs.getInt("color_id"));                
+                Size size = new SizeDAO().getSizeById(rs.getInt("size_id"));
+                ProductVariant variant = new ProductVariant(
+                        rs.getInt("id"),
+                        product, 
+                        size, 
+                        color, 
                         rs.getInt("price"),
                         rs.getInt("sale"),
                         rs.getInt("stock"),
@@ -115,6 +149,8 @@ public class ProductVariantDAO {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(ProductVariantDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return list;
     }
@@ -444,14 +480,26 @@ public class ProductVariantDAO {
 
     public static void main(String[] args) {
         ProductVariantDAO dao = new ProductVariantDAO();
-        List<ProductVariant> variants = dao.getTop15SaleProductVariants();
-        System.out.println("Danh sách TOP 15 sản phẩm hot:");
-        for (ProductVariant variant : variants) {
-            System.out.println("ID: " + variant.getId()
-                    + ", Tên: " + variant.getProduct().getName()
-                    + ", Giá: " + variant.getPrice()
-                    + ", Giảm giá: " + variant.getSale()
-                    + ", Số lượng còn lại: " + variant.getStock());
+        
+        // Giả sử bạn có các ID hợp lệ để thử nghiệm
+        int productId = 1;  // ID của sản phẩm
+        int sizeId = 1;      // ID của kích thước
+        int colorId = 1;     // ID của màu sắc
+        
+        ProductVariant variant = dao.getVariantBySizeAndColor(productId, sizeId, colorId);
+        
+        if (variant != null) {
+            System.out.println("Product Variant Found:");
+            System.out.println("ID: " + variant.getId());
+            System.out.println("Product: " + variant.getProduct().getName());
+            System.out.println("Size: " + variant.getSize().getMemorySize());
+            System.out.println("Color: " + variant.getColor().getColor());
+            System.out.println("Price: " + variant.getPrice());
+            System.out.println("Sale: " + variant.getSale());
+            System.out.println("Stock: " + variant.getStock());
+        } else {
+            System.out.println("No product variant found.");
         }
+    
     }
 }

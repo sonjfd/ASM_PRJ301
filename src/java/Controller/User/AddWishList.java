@@ -92,6 +92,7 @@ public class AddWishList extends HttpServlet {
             session.setAttribute("listvariant", list);
 
         }
+        
 
         session.setAttribute("listvariant", list);
 

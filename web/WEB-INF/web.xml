@@ -184,6 +184,14 @@
         <servlet-name>AccessDenied</servlet-name>
         <servlet-class>Controller.User.AccessDenied</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>Rating</servlet-name>
+        <servlet-class>Controller.User.RatingProduct</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>Ratings</servlet-name>
+        <servlet-class>Controller.User.Ratings</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>addCategories</servlet-name>
         <url-pattern>/addcategories</url-pattern>
@@ -416,6 +424,14 @@
     <servlet-mapping>
         <servlet-name>AccessDenied</servlet-name>
         <url-pattern>/accessdenied</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Rating</servlet-name>
+        <url-pattern>/rating</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Ratings</servlet-name>
+        <url-pattern>/ratings</url-pattern>
     </servlet-mapping>
     <welcome-file-list>
         <welcome-file>HomePage.jsp</welcome-file>

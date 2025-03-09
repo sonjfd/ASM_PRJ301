@@ -304,6 +304,39 @@ public class UserDAO {
         }
         return null;
     }
+    
+    public Users getUserByEmail(String email) {
+        String sql = "SELECT * FROM users WHERE email = ?";
+        try (Connection conn=DBContext.getConnection();
+                PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, email);
+            
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                Users user = new Users();
+                user.setId(rs.getInt("id"));
+                user.setFullname(rs.getString("name"));
+                user.setAccount(rs.getString("account"));
+                user.setPassword(rs.getString("password"));
+                user.setEmail(rs.getString("email"));
+                user.setPhone(rs.getString("phone"));
+                user.setGender(rs.getString("gender"));
+                user.setAddress(rs.getString("address"));
+                user.setAvatar(rs.getString("avatar"));
+                user.setStatus(rs.getInt("status"));
+                user.setRole(rs.getString("role"));
+                user.setCreatedAt(rs.getTimestamp("created_at"));
+                user.setUpdatedAt(rs.getTimestamp("updated_at"));
+                
+                return user;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null; // Nếu không tìm thấy người dùng, trả về null
+    }
 
     public static void main(String[] args) throws SQLException {
         UserDAO dao = new UserDAO();

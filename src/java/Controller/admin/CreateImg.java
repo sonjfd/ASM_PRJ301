@@ -85,7 +85,7 @@ public class CreateImg extends HttpServlet {
         String name=request.getParameter("name");
         
         Part part=request.getPart("path");
-        String realPath=request.getServletContext().getRealPath("images");
+        String realPath=request.getServletContext().getRealPath("/assets/images");
         String filename= Path.of(part.getSubmittedFileName()).getFileName().toString();
         File uploads=new File(realPath);
         if(!uploads.exists()){

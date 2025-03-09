@@ -188,41 +188,43 @@
 
                         <!-- /product -->
                         <c:forEach var="variant" items="${sessionScope.listvariant}">
+                            
                             <!-- Tìm sản phẩm tương ứng với variant -->
+                            <a href="product-variant-details?id=${variant.product.id}&size=${variant.size.memorySize}&color=${variant.color.color}">
 
-
-                            <div class="col-md-4 col-xs-6">
-                                <div class="product">
-                                    <div class="product-img">
-                                        <img src="${pageContext.request.contextPath}${variant.product.avatar}" alt="${variant.product.name}" style="width: 253px;height: 172px"">
-                                        <div class="product-label">
-                                            <span class="sale">-${variant.sale}%</span>
-                                            <span class="new">NEW</span>
+                                <div class="col-md-4 col-xs-6">
+                                    <div class="product">
+                                        <div class="product-img">
+                                            <img src="${pageContext.request.contextPath}${variant.product.avatar}" alt="${variant.product.name}" style="width: 253px;height: 253px"">
+                                            <div class="product-label">
+                                                <span class="sale">-${variant.sale}%</span>
+                                                <span class="new">NEW</span>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="product-body">
-                                        <p class="product-category">${variant.product.category.name }</p>
-                                        <h5 class="product-name"><a href="#">${variant.product.name}</a></h5>
-                                        <h5 class="product-name">${variant.size.memorySize}GB</h5>
-                                        <h4 class="product-price">${variant.price} VND 
-                                            <del class="product-old-price">${variant.price + (variant.price * variant.sale / 100)} VND</del>
-                                        </h4>
-                                        <div class="product-rating">
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star-o"></i>
-                                        </div>
+                                        <div class="product-body">
+                                            <p class="product-category">${variant.product.category.name }</p>
+                                            <h5 class="product-name"><a href="#">${variant.product.name}</a></h5>
+                                            <h5 class="product-name">${variant.size.memorySize}GB</h5>
+                                            <h4 class="product-price">${variant.price} VND 
+                                                <del class="product-old-price">${variant.price + (variant.price * variant.sale / 100)} VND</del>
+                                            </h4>
+                                            <div class="product-rating">
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star-o"></i>
+                                            </div>
 
-                                    </div>
-                                    <div class="add-to-cart">
-                                        <button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>
+                                        </div>
+                                        <div class="add-to-cart">
+                                            <button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <!-- /product -->
-
+                                <!-- /product -->
+                            </a>
+                                                
 
 
 

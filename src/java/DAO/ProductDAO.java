@@ -131,6 +131,59 @@ public class ProductDAO {
         return null;
     }
 
+    public ArrayList<Product> getProductsByCategoryId(int cid) {
+        ArrayList<Product> products = new ArrayList<>();
+        Connection conn = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        String sql = "SELECT * FROM products WHERE category_id = ?";
+
+        try {
+            conn = DBContext.getConnection();
+            stm = conn.prepareStatement(sql);
+            stm.setInt(1, cid);
+            rs = stm.executeQuery();
+
+            while (rs.next()) {
+                Categories category = new CategoriesDAO().getCategoriesByid(rs.getInt("category_id"));
+
+                Product product = new Product(
+                        rs.getInt("id"),
+                        category,
+                        rs.getString("name"),
+                        rs.getString("description"),
+                        rs.getString("content"),
+                        rs.getString("avatar"),
+                        rs.getInt("status"),
+                        rs.getInt("hot"),
+                        rs.getInt("total_rating"),
+                        rs.getInt("total_stars"),
+                        rs.getTimestamp("created_at"),
+                        rs.getTimestamp("updated_at")
+                );
+                products.add(product);
+            }
+        } catch (Exception e) {
+            e.printStackTrace(); 
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (stm != null) {
+                    stm.close();
+                }
+                if (conn != null) {
+                    conn.close();
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+        return products;
+    }
+
     public int updateStatus(int productid, int newStatus) throws ClassNotFoundException {
         String sql = "UPDATE [dbo].[products] SET [status] = ? WHERE id = ?";
         int result = 0;
@@ -266,127 +319,13 @@ public class ProductDAO {
         return list;
     }
 
-    public List<Product> getTop10HotProducts() {
-        List<Product> products = new ArrayList<>();
-        String sql = "SELECT TOP(10)"
-                + "    p.id AS product_id, "
-                + "    p.category_id as category_id, "
-                + "    p.name AS name, "
-                + "    p.description AS description, "
-                + "    p.content AS content, "
-                + "    p.avatar AS avatar, "
-                + "    p.total_rating, "
-                + "    p.total_stars, "
-                + "    pv.id AS variant_id, "
-                + "    pv.size_id, "
-                + "    pv.color_id, "
-                + "    pv.price, "
-                + "    pv.sale, "
-                + "    pv.stock, "
-                + "    pv.status AS variant_status "
-                + "FROM products p "
-                + "JOIN product_variants pv ON p.id = pv.product_id "
-                + "WHERE p.status = 1 AND pv.status = 1 "
-                + "ORDER BY p.total_stars DESC ";
-
-        Connection conn = null;
-        PreparedStatement stm = null;
-        ResultSet rs = null;
-
-        try {
-            conn = DBContext.getConnection();
-            stm = conn.prepareStatement(sql);
-            rs = stm.executeQuery();
-            Map<Integer, Product> productMap = new HashMap<>();
-
-            while (rs.next()) {
-                int productId = rs.getInt("product_id");
-                Product product = productMap.get(productId);
-                if (product == null) {
-                    product = new Product();
-                    product.setId(productId);
-                    Categories c = (new CategoriesDAO()).getCategoriesByid(rs.getInt("category_id"));
-                    product.setCategory(c);
-                    product.setName(rs.getString("name"));
-                    product.setDescription(rs.getString("description"));
-                    product.setContent(rs.getString("content"));
-                    product.setAvatar(rs.getString("avatar"));
-                    product.setTotalRating(rs.getInt("total_rating"));
-                    product.setTotalStars(rs.getInt("total_stars"));
-                    product.setVariants(new ArrayList<>());  // Khởi tạo danh sách biến thể
-                    productMap.put(productId, product);
-                }
-
-                Color color = new ColorDAO().getColorByid(rs.getInt("color_id"));
-                Size size = new SizeDAO().getSizeById(rs.getInt("size_id"));
-                ProductVariant variant = new ProductVariant();
-                variant.setId(rs.getInt("variant_id"));
-
-                variant.setSize(size);
-                variant.setColor(color);
-                variant.setPrice(rs.getInt("price"));
-                variant.setSale(rs.getInt("sale"));
-                variant.setStock(rs.getInt("stock"));
-                variant.setStatus(rs.getInt("variant_status"));
-
-                product.getVariants().add(variant);
-            }
-            products.addAll(productMap.values());
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(ProductDAO.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-        return products;
-    }
-
-    public int getTotalProducts() {
-        String query = "SELECT COUNT(*) FROM Product";
-        try (Connection conn = DBContext.getConnection(); PreparedStatement ps = conn.prepareStatement(query); ResultSet rs = ps.executeQuery()) {
-            if (rs.next()) {
-                return rs.getInt(1);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return 0;
-    }
-
-    public List<Product> getProductsByPage(int page, int pageSize) {
-        List<Product> list = new ArrayList<>();
-        String query = "SELECT * FROM Product LIMIT ? OFFSET ?";
-        try (Connection conn = DBContext.getConnection(); PreparedStatement ps = conn.prepareStatement(query)) {
-            ps.setInt(1, pageSize);
-            ps.setInt(2, (page - 1) * pageSize);
-            ResultSet rs = ps.executeQuery();
-            while (rs.next()) {
-                Categories c = (new CategoriesDAO().getCategoriesByid(rs.getInt("category_id")));
-                list.add(new Product(
-                        rs.getInt("id"),
-                        c, // Gán đối tượng Category thay vì ID
-                        rs.getString("name"),
-                        rs.getString("description"),
-                        rs.getString("content"),
-                        rs.getString("avatar"),
-                        rs.getInt("status"),
-                        rs.getInt("hot"),
-                        rs.getInt("total_rating"),
-                        rs.getInt("total_stars"),
-                        rs.getTimestamp("created_at"),
-                        rs.getTimestamp("updated_at")));
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return list;
-    }
+   
+    
+    
+    
 
     public static void main(String[] args) throws ClassNotFoundException {
 
-        ProductDAO productDAO = new ProductDAO();
-        ArrayList<Product> li = (ArrayList<Product>) productDAO.getTop10HotProducts();
-        System.out.println(li);
+        
     }
 }

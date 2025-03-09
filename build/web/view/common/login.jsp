@@ -67,11 +67,7 @@
     .form input:focus{
         box-shadow: 0 1px 0 rgba(0,0,0,0.2);
     }
-    .form a{
-        font-size: 16px;
-        color: #009579;
-        text-decoration: none;
-    }
+
     .form a:hover{
         text-decoration: underline;
     }
@@ -99,6 +95,30 @@
     .signup label:hover{
         text-decoration: underline;
     }
+    .google-login {
+        margin-top: 1rem;
+    }
+    .google-button {
+        display: inline-block;
+        color: #fff;
+        background: #d9534f;
+        font-size: 1rem;
+        font-weight: 500;
+        letter-spacing: 1px;
+        cursor: pointer;
+        transition: 0.4s;
+        width: 80%;
+        height: 40px;
+        border-radius: 6px;
+        line-height: 40px;
+        text-decoration: none;
+        text-align: center;
+    }
+    .google-button:hover {
+        background: #c9302c;
+        text-decoration: none;
+    }
+
 
 </style>
 
@@ -121,8 +141,16 @@
                     <input type="text" name="account" placeholder="Tên đăng nhập">
                     <input type="password" name="password" placeholder="Mật khẩu">
                     <a href="#">Quên mật khẩu?</a>
+
+                    <div class="g_id_signin" data-type="standard"></div>
                     <input type="submit" class="button" value="Login">
                 </form>
+
+                <div class="signup">
+                        <a href="https://accounts.google.com/o/oauth2/auth?scope=profile&redirect_uri=http://localhost:8080/PRJ301/login&response_type=code
+		   &client_id=825860550612-nl9772482dv1aa733ki7834ba24q0k43.apps.googleusercontent.com&approval_prompt=force">Login With Google</a>
+                </div>
+
                 <div class="signup" >
                     <span class="signup">
                         <a href="register" for="check">Đăng kí tài khoản</a>

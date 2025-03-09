@@ -24,7 +24,7 @@ import model.Users;
  *
  * @author Dell
  */
-@WebFilter(filterName = "FilterRole", urlPatterns = {"/admin","/user","/listcategories"})
+@WebFilter(filterName = "FilterRole", urlPatterns = {"/admin","/user","/adduser","/listcategories","/listproduct","/listvariant","/listorder","/attributes","/img"})
 public class FilterRole implements Filter {
 
     private static final boolean debug = true;
@@ -101,7 +101,7 @@ public class FilterRole implements Filter {
      */
     public void doFilter(ServletRequest request, ServletResponse response,
             FilterChain chain)
-            throws IOException, ServletException {  
+            throws IOException, ServletException {
 
         if (debug) {
             log("FilterRole:doFilter()");
@@ -113,56 +113,50 @@ public class FilterRole implements Filter {
         HttpSession session = req.getSession();
         if (session.getAttribute("user") == null) {
             res.sendRedirect("login");
-            
+
         } else {
             Users u = (Users) session.getAttribute("user");
             if (u.getRole().equals("admin")) {
-                req.getRequestDispatcher("admin").forward(request, response);
+                chain.doFilter(request, response);
                 return;
             } else {
                 res.sendRedirect("accessdenied");
                 return;
             }
-        
-    }
-    Throwable problem = null;
 
-    
+        }
+        Throwable problem = null;
+
         try {
-                    chain.doFilter(request, response);
-    }
-    catch (Throwable t
-
-    
-        ) {
-                    // If an exception is thrown somewhere down the filter chain,
-                    // we still want to execute our after processing, and then
-                    // rethrow the problem after that.
-                    problem = t;
-        t.printStackTrace();
-    }
-
-    doAfterProcessing(request, response);
-
-    // If there was a problem, we want to rethrow it if it is
-    // a known type, otherwise log it.
-    if (problem
-
-    
-        != null) {
-                    if (problem instanceof ServletException) {
-            throw (ServletException) problem;
+            chain.doFilter(request, response);
+        } catch (Throwable t) {
+            // If an exception is thrown somewhere down the filter chain,
+            // we still want to execute our after processing, and then
+            // rethrow the problem after that.
+            problem = t;
+            t.printStackTrace();
         }
-        if (problem instanceof IOException) {
-            throw (IOException) problem;
+
+        doAfterProcessing(request, response);
+
+        // If there was a problem, we want to rethrow it if it is
+        // a known type, otherwise log it.
+        if (problem
+                != null) {
+            if (problem instanceof ServletException) {
+                throw (ServletException) problem;
+            }
+            if (problem instanceof IOException) {
+                throw (IOException) problem;
+            }
+            sendProcessingError(problem, response);
         }
-        sendProcessingError(problem, response);
     }
-}
-/**
- * Return the filter configuration object for this filter.
- */
-public FilterConfig getFilterConfig() {
+
+    /**
+     * Return the filter configuration object for this filter.
+     */
+    public FilterConfig getFilterConfig() {
         return (this.filterConfig);
     }
 
@@ -197,7 +191,7 @@ public FilterConfig getFilterConfig() {
      * Return a String representation of this object.
      */
     @Override
-public String toString() {
+    public String toString() {
         if (filterConfig == null) {
             return ("FilterRole()");
         }

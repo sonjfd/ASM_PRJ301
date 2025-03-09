@@ -89,7 +89,8 @@ public class ShopDetails extends HttpServlet {
         } else {
             listv = variantdao.getAll();
         }
-
+        
+       
         if ("filterproduct".equals(service)) {
             String[] categoryArray = request.getParameterValues("category[]");
             String[] sizeArray = request.getParameterValues("size[]");

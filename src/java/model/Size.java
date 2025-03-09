@@ -4,6 +4,8 @@
  */
 package model;
 
+import java.util.Objects;
+
 /**
  *
  * @author Dell
@@ -12,6 +14,7 @@ public class Size {
     private int id;
     private int memorySize;
 
+   
     public Size() {
     }
 

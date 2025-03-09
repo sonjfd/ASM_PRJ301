@@ -129,8 +129,8 @@
                 max-height: 400px;
                 overflow-y: auto;
             }
-            
-            
+
+
 
 
         </style>
@@ -310,6 +310,34 @@
                         </tr>
                     </c:forEach>
                 </table>
+
+                
+                <div style="margin-top: 20px; text-align: center;">
+                    <c:if test="${totalPages > 1}">
+                        <nav>
+                            <ul class="pagination">
+                                <c:if test="${currentPage > 1}">
+                                    <li class="page-item">
+                                        <a class="page-link" href="?page=${currentPage - 1}">Trước</a>
+                                    </li>
+                                </c:if>
+
+                                <c:forEach begin="1" end="${totalPages}" var="i">
+                                    <li class="page-item ${i == currentPage ? 'active' : ''}">
+                                        <a class="page-link" href="?page=${i}">${i}</a>
+                                    </li>
+                                </c:forEach>
+
+                                <c:if test="${currentPage < totalPages}">
+                                    <li class="page-item">
+                                        <a class="page-link" href="?page=${currentPage + 1}">Sau</a>
+                                    </li>
+                                </c:if>
+                            </ul>
+                        </nav>
+                    </c:if>
+                </div>
+
 
 
 
